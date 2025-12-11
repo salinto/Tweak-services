@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tweaks Service</title>
+  <style>
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial; color:#eee; background:#050005;}
+
+    /* Starfield background */
+    .stars, .twinkles {
+      position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:0;
+      background-repeat:repeat;
+    }
+    .stars{background-image:radial-gradient(#9b00ff 1px, transparent 1px);background-size:6px 6px;opacity:0.25;}
+    .twinkles{background-image:radial-gradient(#ffffff 0.8px, transparent 0.8px);background-size:120px 120px;opacity:0.08;animation:drift 30s linear infinite;}
+    @keyframes drift{from{transform:translateY(0)}to{transform:translateY(-200px)}}
+
+    /* Top announcement bar */
+    .announce{background:#8b00d1;color:#fff;text-align:center;padding:8px 12px;font-weight:600;letter-spacing:.6px;z-index:3;position:relative}
+
+    /* Header */
+    header{position:relative;z-index:3;padding:28px 40px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:14px}
+    .logo .badge{background:linear-gradient(90deg,#1b001b,#6a00ff);padding:6px 12px;border-radius:6px;font-weight:800;color:#fff}
+    nav{display:flex;gap:20px;align-items:center}
+    nav a{color:rgba(255,255,255,0.9);text-decoration:none;padding:6px 8px;border-radius:4px;transition:all .18s}
+    nav a:hover{transform:translateY(-2px);color:#fff}
+
+    .actions{display:flex;gap:12px;align-items:center}
+    .purchase-btn{background:#9b00ff;border:none;color:white;padding:12px 18px;border-radius:8px;cursor:pointer;font-weight:700}
+
+    /* Main container */
+    .container{max-width:1200px;margin:40px auto;padding:0 24px;position:relative;z-index:2}
+
+    /* Product grid */
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:48px;margin-top:40px}
+    .card{background:linear-gradient(135deg,rgba(155,0,255,0.22),rgba(255,0,150,0.08));border-radius:14px;padding:32px;min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 8px 28px rgba(0,0,0,0.6);backdrop-filter:blur(4px);position:relative;overflow:hidden}
+    .card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 10%),linear-gradient(0deg,rgba(0,0,0,0.15),transparent);mix-blend-mode:overlay}
+    .card .art{height:120px;border-radius:10px;background:linear-gradient(60deg,#7d00ff,#e12de0);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:30px;color:rgba(0,0,0,0.25);margin-bottom:18px}
+    .card h3{font-size:18px;margin-bottom:6px}
+    .card p{color:rgba(255,255,255,0.8)}
+    .card .cta{margin-top:10px;font-weight:700;color:#fff;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+
+    /* Grid small hero variants */
+    .two-up{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+
+    /* Footer */
+    footer{margin-top:80px;padding:40px 0;text-align:center;color:rgba(255,255,255,0.6)}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:40}
+    .modal.open{display:flex}
+    .modal .sheet{background:#0b0010;border-radius:12px;padding:24px;min-width:320px;max-width:420px;box-shadow:0 18px 60px rgba(0,0,0,0.7)}
+    .pay-btn{display:block;padding:12px;border-radius:8px;text-decoration:none;text-align:center;font-weight:700;margin-top:12px}
+    .pay-btn.stripe{background:linear-gradient(90deg,#ff6b6b,#ffb86b);color:#111}
+    .pay-btn.paypal{background:#003087;color:#fff}
+    .pay-btn.crypto{background:linear-gradient(90deg,#6f00ff,#00d4ff);color:#fff}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr;gap:20px}
+      header{padding:18px}
+      .container{margin:20px auto}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="twinkles"></div>
+  <div class="announce">⚠️ CLICK TO JOIN THE DISCORD NOW — Tweaks Service Community</div>
+
+  <header>
+    <div class="logo">
+      <div class="badge">TWEAKS SERVICE</div>
+      <div style="color:rgba(255,255,255,0.7);font-weight:600">Premium game macros & tweaks</div>
+    </div>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#products">Products</a>
+      <a href="#discord">Discord</a>
+      <a href="#affiliate">Affiliate</a>
+    </nav>
+
+    <div class="actions">
+      <button class="purchase-btn" id="purchaseOpen">Purchase</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="two-up">
+      <div style="padding:30px;background:linear-gradient(180deg,rgba(0,0,0,0.25),transparent);border-radius:12px;"> 
+        <h1 style="font-size:36px;margin-bottom:10px;">Tweaks Service</h1>
+        <p style="color:rgba(255,255,255,0.8);max-width:680px;">High-quality macros, performance tweaks and utility packs. Secure digital delivery, multiple payment options, and friendly support on Discord.</p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center">
+        <div style="width:220px;height:140px;border-radius:12px;background:linear-gradient(90deg,#7d00ff,#e12de0);display:flex;align-items:center;justify-content:center;font-weight:900;color:rgba(0,0,0,0.2);">TWEAKS</div>
+      </div>
+    </section>
+
+    <section id="products" class="grid">
+      <article class="card">
+        <div class="art">TWEAKS</div>
+        <h3>Tweaks Service</h3>
+        <p>Ultimate tweaking pack — macros, configs, and optimizations.</p>
+        <a class="cta" href="#" onclick="openPurchase('Tweaks Service')">Explore →</a>
+      </article>
+
+      <article class="card">
+        <div class="art">SHOTGUN</div>
+        <h3>Shotgun Pack & BR</h3>
+        <p>Specialized shotguns and battle royale tuning packs.</p>
+        <a class="cta" href="#" onclick="openPurchase('Shotgun Pack & BR')">Explore →</a>
+      </article>
+
+      <article class="card">
+        <div class="art">MACRO</div>
+        <h3>Macros</h3>
+        <p>Ready-to-use macros for multiple games, fully configurable.</p>
+        <a class="cta" href="#" onclick="openPurchase('Macros')">Explore →</a>
+      </article>
+
+      <article class="card">
+        <div class="art">CONSOLE</div>
+        <h3>Console Tweaks</h3>
+        <p>Tweaks and utilities tailored for console-to-PC workflows.</p>
+        <a class="cta" href="#" onclick="openPurchase('Console Tweaks')">Explore →</a>
+      </article>
+    </section>
+
+    <footer>
+      <p>&copy; <span id="year"></span> Tweaks Service — All rights reserved. <span style="display:block;margin-top:6px;color:rgba(255,255,255,0.45)">Hosted on GitHub Pages • Replace payment links in the template with your live checkout URLs.</span></p>
+    </footer>
+  </main>
+
+  <!-- Purchase modal (Stripe/PayPal/Crypto placeholders) -->
+  <div class="modal" id="purchaseModal">
+    <div class="sheet">
+      <h3 id="modalTitle">Purchase</h3>
+      <p style="color:rgba(255,255,255,0.8);">Choose a payment method. Replace the links below with your Stripe / PayPal / Coinbase Commerce URLs.</p>
+
+      <a class="pay-btn stripe" id="stripeLink" href="#" target="_blank">Pay with Card (Stripe)</a>
+      <a class="pay-btn paypal" id="paypalLink" href="#" target="_blank">Pay with PayPal</a>
+      <a class="pay-btn crypto" id="cryptoLink" href="#" target="_blank">Pay with Crypto</a>
+
+      <button style="margin-top:12px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.06);border:none;color:#fff;cursor:pointer" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // Small utility: replace these with your live checkout links
+    const PURCHASE_LINKS = {
+      stripe: 'YOUR_STRIPE_PAYMENT_LINK',
+      paypal: 'YOUR_PAYPAL_BUTTON_LINK',
+      crypto: 'YOUR_COINBASE_COMMERCE_LINK'
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const modal = document.getElementById('purchaseModal');
+    const modalTitle = document.getElementById('modalTitle');
+
+    document.getElementById('purchaseOpen').addEventListener('click', () => {
+      modalTitle.textContent = 'Purchase Tweaks Service';
+      openModal();
+    })
+
+    function openPurchase(productName){
+      modalTitle.textContent = 'Purchase — ' + productName;
+      openModal();
+    }
+
+    function openModal(){
+      document.getElementById('stripeLink').href = PURCHASE_LINKS.stripe;
+      document.getElementById('paypalLink').href = PURCHASE_LINKS.paypal;
+      document.getElementById('cryptoLink').href = PURCHASE_LINKS.crypto;
+      modal.classList.add('open');
+    }
+    function closeModal(){ modal.classList.remove('open'); }
+
+    // click outside to close
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); })
+  </script>
+</body>
+</html>
